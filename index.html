@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ru"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="utf-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Создатель каруселей для Instagram&lt;/title&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>:root{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--bg:#F8FAFC; --surface:#FFFFFF; --text:#0F172A; --muted:#64748B;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--border:#E2E8F0; --primary:#2563EB; --primary-hover:#1D4ED8;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--radius-lg:18px; --radius-md:12px; --shadow:0 6px 20px rgba(15,23,42,.08);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--gray:#F1F5F9;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>*{box-sizing:border-box}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,Roboto,Arial,sans-serif}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.wrap{max-width:920px;margin:0 auto;padding:32px 16px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>header{text-align:center;margin-bottom:32px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h1{margin:0 0 12px;font-size:32px;font-weight:700}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.sub{margin:0;color:var(--muted);font-size:18px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:24px;margin-bottom:24px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>label{display:block;font-weight:600;margin-bottom:8px;font-size:16px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>textarea,select,input[type=number]{width:100%;border-radius:var(--radius-md);border:1px solid var(--border);padding:12px 14px;font-size:16px;font-family:inherit;background:#fff;transition:border .2s ease}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>textarea{min-height:160px;resize:vertical}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>textarea:focus,select:focus,input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.25)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button{border:none;border-radius:var(--radius-md);font-size:16px;font-weight:600;padding:12px 18px;cursor:pointer;transition:background .2s}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button.primary{background:var(--primary);color:#fff}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button.primary:hover{background:var(--primary-hover)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button.secondary{background:var(--gray);color:var(--text);border:1px solid var(--border)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.counts{display:flex;gap:12px;margin-top:12px;font-size:14px;color:var(--muted)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.badge{background:var(--gray);padding:6px 12px;border-radius:999px;font-weight:500}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>details summary{cursor:pointer;color:var(--primary);font-weight:600}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.gallery{display:grid;gap:20px;margin-top:24px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.slide{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.slide img{width:100%;display:block}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.slide-controls{display:flex;gap:10px;justify-content:flex-end;padding:10px 12px;border-top:1px solid var(--border);background:var(--gray)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.slide-controls button{font-size:14px;padding:8px 14px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>footer{margin-top:24px;text-align:center;color:var(--muted);font-size:14px}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.hint{font-size:14px;color:var(--muted);margin-top:8px}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Создатель каруселей для Instagram&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="sub"&gt;Вставьте текст → получайте слайды → сохраняйте изображения.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Блок 1. Вставка текста --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;Вставьте текст для карусели &lt;span style="color:var(--muted)"&gt;(каждый абзац = отдельный слайд)&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;textarea id="story" placeholder="Абзацы разделяйте пустой строкой (двойной Enter)."&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="counts"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="badge" id="paraCount"&gt;Абзацев: 0&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="badge" id="photoCount"&gt;С фото: 0/0&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Блок 2. Базовые настройки --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;Базовые настройки&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Какой должен быть цвет текста?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;select id="textColor"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;option value="#000000" selected&gt;Чёрный&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;option value="#ffffff"&gt;Белый&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-top:16px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Какой должен быть цвет подложки?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;select id="backdropColor"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;option value="0,0,0" selected&gt;Чёрная&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;option value="255,255,255"&gt;Белая&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Подсказка --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="hint"&gt;После изменения любого параметра нажмите кнопку &lt;b&gt;«Обновить слайды»&lt;/b&gt;, чтобы увидеть результат.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Блок 3. Дополнительные настройки --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;summary&gt;Дополнительные настройки &lt;span style="color:var(--muted)"&gt;(необязательно)&lt;/span&gt;&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="margin-top:16px;display:grid;gap:16px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Шрифт&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="fontFamily"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="'Montserrat', sans-serif" selected&gt;Montserrat&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="'Playfair Display', serif"&gt;Playfair Display&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="'Lora', serif"&gt;Lora&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="'Open Sans', sans-serif"&gt;Open Sans&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="'Raleway', sans-serif"&gt;Raleway&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="-apple-system, BlinkMacSystemFont,'Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif"&gt;Системный&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Выравнивание текста&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="textAlign"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="left" selected&gt;По левому краю&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="center"&gt;По центру&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="right"&gt;По правому краю&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Размер шрифта (px)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="fontSize" type="number" min="18" max="64" value="45"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Межстрочный интервал&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="lineHeight" type="number" step="0.05" min="1.1" max="2" value="1.25"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Отступ текста (px)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="padding" type="number" min="24" max="120" value="64"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Высота подложки (% от холста)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="fadePct" type="number" min="10" max="100" value="60"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Прозрачность подложки (0–1)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="backdropOpacity" type="number" step="0.05" min="0" max="1" value="1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Скругление углов (px)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="cornerRadius" type="number" min="0" max="80" value="0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Тень текста (0–1)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input id="shadow" type="number" step="0.05" min="0" max="1" value="0.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;&lt;input type="checkbox" id="swipeArrow"&gt; Показывать стрелку «свайп вправо»&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Кнопки --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="card" style="display:flex;gap:12px;justify-content:flex-end;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button id="update" class="primary"&gt;Обновить слайды&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button id="clear" class="secondary"&gt;Очистить&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="results" class="gallery"&gt;&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Размер картинок: 1080×1350 (формат 4:5). Нажмите «Заменить изображение» для выбора фона или кликните по картинке, чтобы сохранить.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>(function(){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(window.igApp&amp;&amp;window.igApp.destroy){window.igApp.destroy();if(window.igApp.filePicker)window.igApp.filePicker.remove()}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const CANVAS_W=1080,CANVAS_H=1350;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const storyInput=document.getElementById('story');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const paraCount=document.getElementById('paraCount');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const photoCount=document.getElementById('photoCount');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const results=document.getElementById('results');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const updateBtn=document.getElementById('update');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const clearBtn=document.getElementById('clear');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const fontFamily=document.getElementById('fontFamily');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const textAlignSel=document.getElementById('textAlign');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const fontSizeInput=document.getElementById('fontSize');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const lineHeightInput=document.getElementById('lineHeight');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const paddingInput=document.getElementById('padding');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const fadePctInput=document.getElementById('fadePct');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const backdropOpacityInput=document.getElementById('backdropOpacity');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const backdropColorInput=document.getElementById('backdropColor');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const cornerRadiusInput=document.getElementById('cornerRadius');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const textColorInput=document.getElementById('textColor');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const shadowInput=document.getElementById('shadow');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const swipeArrow=document.getElementById('swipeArrow');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const destroyFns=[];function on(el,ev,fn){el.addEventListener(ev,fn);destroyFns.push(()=&gt;el.removeEventListener(ev,fn))}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let slides=[];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let pendingIndex=null;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const filePicker=document.createElement('input');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>filePicker.type='file';filePicker.accept='image/*';filePicker.style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.body.appendChild(filePicker);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>on(filePicker,'change',async e=&gt;{const f=e.target.files&amp;&amp;e.target.files[0];if(!f)return;if(pendingIndex==null)return;const url=await fileToDataURL(f);const img=await urlToImage(url);slides[pendingIndex].image=img;await renderOne(pendingIndex);pendingIndex=null;filePicker.value='';updateCounts()});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function parseParas(){return String(storyInput.value||'').split(/\n\s*\n+/).map(p=&gt;p.replace(/[\t\r]+/g,' ').trim()).filter(Boolean)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function buildOrPreserve(){const next=parseParas();if(!slides.length){slides=next.map(t=&gt;({text:t,image:null}))}else{const kept=Math.min(slides.length,next.length);for(let i=0;i&lt;kept;i++){slides[i].text=next[i]}if(next.length&gt;slides.length){for(let i=slides.length;i&lt;next.length;i++){slides.push({text:next[i],image:null})}}else if(next.length&lt;slides.length){slides=slides.slice(0,next.length)}}}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>async function ensureFonts(){if(document.fonts&amp;&amp;document.fonts.ready){try{await document.fonts.ready}catch{}}}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>async function renderAll(){results.innerHTML='';await ensureFonts();for(let i=0;i&lt;slides.length;i++){await renderOne(i)}updateCounts()}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>async function renderOne(i){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const s=slides[i];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const canvas=document.createElement('canvas');canvas.width=CANVAS_W;canvas.height=CANVAS_H;const ctx=canvas.getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const radius=clamp(parseInt(cornerRadiusInput.value||0),0,80);if(radius&gt;0){roundedRect(ctx,0,0,CANVAS_W,CANVAS_H,radius);ctx.clip()}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(s.image){drawCover(ctx,s.image,CANVAS_W,CANVAS_H)}else{ctx.fillStyle='#F1F5F9';ctx.fillRect(0,0,CANVAS_W,CANVAS_H)}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const fadePct=clamp(parseInt(fadePctInput.value||60),10,100)/100;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const back=clamp(parseFloat(backdropOpacityInput.value||1),0,1);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const [r,g,b]=backdropColorInput.value.split(',').map(Number);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const grad=ctx.createLinearGradient(0,CANVAS_H,0,CANVAS_H*(1-fadePct));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>grad.addColorStop(0,`rgba(${r},${g},${b},${back})`);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>grad.addColorStop(1,`rgba(${r},${g},${b},0)`);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ctx.fillStyle=grad;ctx.fillRect(0,0,CANVAS_W,CANVAS_H);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const pad=clamp(parseInt(paddingInput.value||64),16,160);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const fontSize=clamp(parseInt(fontSizeInput.value||45),18,72);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const lh=clamp(parseFloat(lineHeightInput.value||1.25),1.1,2);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const color=textColorInput.value||'#000';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const shadow=clamp(parseFloat(shadowInput.value||0.5),0,1);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const align=textAlignSel?textAlignSel.value:'left';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ctx.fillStyle=color;ctx.font=`${fontSize}px ${fontFamily?fontFamily.value:"sans-serif"}`;ctx.textBaseline='alphabetic';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(shadow&gt;0){ctx.shadowColor=`rgba(0,0,0,${shadow})`;ctx.shadowBlur=8;ctx.shadowOffsetY=2}else{ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const left=pad,right=CANVAS_W-pad,width=right-left,bottom=CANVAS_H-pad,top=CANVAS_H*(1-fadePct)+pad*0.25;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const lines=wrap(ctx,s.text,width);const lineH=fontSize*lh;const total=lines.length*lineH;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let y=Math.min(bottom,Math.max(top+lineH,bottom-total+lineH*0.2));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>for(const line of lines){let x;if(align==='center'){x=CANVAS_W/2;ctx.textAlign='center'}else if(align==='right'){x=right;ctx.textAlign='right'}else{x=left;ctx.textAlign='left'}ctx.fillText(line,x,y);y+=lineH}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(swipeArrow.checked&amp;&amp;i&lt;slides.length-1){const size=Math.min(80,Math.max(56,CANVAS_W*0.06));const cx=CANVAS_W-pad-size/2;const cy=CANVAS_H-pad/2;drawArrow(ctx,cx,cy,size)}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const dataURL=canvas.toDataURL('image/png');let host=results.querySelector(`[data-slide='${i}']`);if(!host){host=document.createElement('div');host.className='slide';host.dataset.slide=String(i);const img=document.createElement('img');img.className='slide-img';host.appendChild(img);const ctrls=document.createElement('div');ctrls.className='slide-controls';const rep=document.createElement('button');rep.textContent='Заменить изображение';rep.addEventListener('click',()=&gt;{pendingIndex=i;filePicker.click()});ctrls.appendChild(rep);host.addEventListener('click',ev=&gt;{if(ev.target.tagName.toLowerCase()==='button')return;const a=document.createElement('a');a.href=host.querySelector('.slide-img').src;a.download=`slide_${String(i+1).padStart(2,'0')}.png`;a.click()});host.appendChild(ctrls);results.appendChild(host)}host.querySelector('.slide-img').src=dataURL}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function drawCover(ctx,img,w,h){const r=img.width/img.height;const R=w/h;let dw,dh,dx,dy;if(r&gt;R){dh=h;dw=h*r;dx=(w-dw)/2;dy=0}else{dw=w;dh=w/r;dx=0;dy=(h-dh)/2}ctx.drawImage(img,dx,dy,dw,dh)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function wrap(ctx,text,maxW){const words=String(text||'').split(/\s+/);const out=[];let line='';for(let i=0;i&lt;words.length;i++){const test=line?line+' '+words[i]:words[i];if(ctx.measureText(test).width&gt;maxW&amp;&amp;line){out.push(line);line=words[i]}else{line=test}}if(line)out.push(line);return out}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function roundedRect(ctx,x,y,w,h,r){const m=Math.min(w,h)/2;r=Math.min(r,m);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function clamp(v,min,max){return Math.max(min,Math.min(max,Number.isFinite(v)?v:min))}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function fileToDataURL(file){return new Promise((res,rej)=&gt;{const r=new FileReader();r.onload=()=&gt;res(r.result);r.onerror=rej;r.readAsDataURL(file)})}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function urlToImage(url){return new Promise((res,rej)=&gt;{const i=new Image();i.onload=()=&gt;res(i);i.onerror=rej;i.src=url})}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function drawArrow(ctx,cx,cy,size){const r=size/2;ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fill();ctx.lineWidth=Math.max(4,size*0.12);ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='rgba(255,255,255,0.95)';const ax1=cx-size*0.18,ay1=cy-size*0.2,ax2=cx+size*0.18,ay2=cy,ax3=cx-size*0.18,ay3=cy+size*0.2;ctx.beginPath();ctx.moveTo(ax1,ay1);ctx.lineTo(ax2,ay2);ctx.lineTo(ax3,ay3);ctx.stroke();ctx.restore()}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function updateCounts(){const p=slides.length;const f=slides.filter(s=&gt;!!s.image).length;paraCount.textContent=`Абзацев: ${p}`;photoCount.textContent=`С фото: ${f}/${p}`}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let t;on(storyInput,'input',()=&gt;{clearTimeout(t);t=setTimeout(async()=&gt;{buildOrPreserve();await renderAll()},500)});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>on(updateBtn,'click',async()=&gt;{buildOrPreserve();await renderAll()});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>on(clearBtn,'click',()=&gt;{results.innerHTML='';slides=[];updateCounts();window.scrollTo({top:0,behavior:'smooth'})});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.igApp={destroy(){destroyFns.forEach(f=&gt;f());},filePicker};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>buildOrPreserve();updateCounts();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>})();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
