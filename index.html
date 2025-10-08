@@ -764,19 +764,25 @@
     }
     
     function wrap(ctx,text,maxW){
-      const words=String(text||'').split(/\s+/);
+      const paragraphs=String(text||'').split('\n'); // Разделяем по одиночным переносам
       const out=[];
-      let line='';
-      for(let i=0;i<words.length;i++){
-        const test=line?line+' '+words[i]:words[i];
-        if(ctx.measureText(test).width>maxW&&line){
-          out.push(line);
-          line=words[i];
-        }else{
-          line=test;
+      
+      for(const para of paragraphs){
+        const words=para.split(/\s+/).filter(Boolean);
+        let line='';
+        
+        for(let i=0;i<words.length;i++){
+          const test=line?line+' '+words[i]:words[i];
+          if(ctx.measureText(test).width>maxW&&line){
+            out.push(line);
+            line=words[i];
+          }else{
+            line=test;
+          }
         }
+        if(line)out.push(line);
       }
-      if(line)out.push(line);
+      
       return out;
     }
     
