@@ -33,10 +33,43 @@
     .gallery{display:grid;gap:20px;margin-top:24px}
     .slide{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden}
     .slide img{width:100%;display:block}
-    .slide-controls{display:flex;gap:10px;justify-content:flex-end;padding:10px 12px;border-top:1px solid var(--border);background:var(--gray)}
-    .slide-controls button{font-size:14px;padding:8px 14px}
+    .slide-controls{display:flex;gap:10px;justify-content:space-between;padding:14px;border-top:1px solid var(--border);background:var(--gray);flex-wrap:wrap}
+    .slide-controls button{font-size:14px;padding:12px 16px;flex:1;min-width:140px;font-weight:600;border-radius:10px;transition:all .2s}
+    .slide-controls .btn-bg{background:#6B46C1;color:#fff}
+    .slide-controls .btn-bg:hover{background:#5B3BA1}
+    .slide-controls .btn-photo{background:#0D9668;color:#fff}
+    .slide-controls .btn-photo:hover{background:#0A7A52}
+    .slide-controls .btn-pattern{background:#D97706;color:#fff}
+    .slide-controls .btn-pattern:hover{background:#B45309}
+    .slide-controls .btn-download{background:#2563EB;color:#fff}
+    .slide-controls .btn-download:hover{background:#1D4ED8}
     footer{margin-top:24px;text-align:center;color:var(--muted);font-size:14px}
     .hint{font-size:14px;color:var(--muted);margin-top:8px}
+    
+    .format-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .format-btn{background:var(--gray);border:2px solid var(--border);border-radius:var(--radius-md);padding:16px;cursor:pointer;transition:all .2s;text-align:center;font-weight:600}
+    .format-btn:hover{border-color:var(--primary);background:#EFF6FF}
+    .format-btn.active{border-color:var(--primary);background:#DBEAFE;color:var(--primary)}
+    
+    .slider-group{margin-bottom:16px}
+    .slider-label{display:flex;justify-content:space-between;margin-bottom:8px}
+    .slider-value{color:var(--primary);font-weight:600}
+    .slider-separator{border-bottom:1px solid var(--border);margin:20px 0;}
+    input[type=range]{width:100%;height:8px;border-radius:4px;background:var(--gray);outline:none;-webkit-appearance:none}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--primary);cursor:pointer}
+    input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--primary);cursor:pointer;border:none}
+    
+    .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:1000;overflow:auto;padding:20px}
+    .modal.active{display:flex;align-items:center;justify-content:center}
+    .modal-content{background:var(--surface);border-radius:var(--radius-lg);max-width:800px;width:100%;max-height:90vh;overflow:auto;padding:24px}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .modal-close{background:var(--gray);border:none;border-radius:50%;width:64px;height:64px;cursor:pointer;font-size:40px;line-height:1;display:flex;align-items:center;justify-content:center}
+    .bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:16px}
+    .bg-item{aspect-ratio:4/5;border-radius:var(--radius-md);cursor:pointer;border:3px solid transparent;transition:all .2s}
+    .bg-item:hover{border-color:var(--primary);transform:scale(1.05)}
+    
+    .pattern-controls{margin-top:16px;padding:16px;background:var(--gray);border-radius:var(--radius-md)}
+    .final-buttons{display:flex;gap:12px;justify-content:flex-end;margin-top:24px}
   </style>
 </head>
 <body>
@@ -59,11 +92,22 @@
     <!-- Блок 2. Базовые настройки -->
     <section class="card">
       <h3>Базовые настройки</h3>
+      
+      <!-- Выбор формата -->
+      <div style="margin-bottom:24px">
+        <label>Выберите размер</label>
+        <div class="format-grid">
+          <div class="format-btn active" data-format="4:5">4:5<br>для каруселей</div>
+          <div class="format-btn" data-format="1:1">1:1<br>для каруселей и постов</div>
+          <div class="format-btn" data-format="9:16">9:16<br>для сторис</div>
+        </div>
+      </div>
+      
       <div>
         <label>Какой должен быть цвет текста?</label>
         <select id="textColor">
-          <option value="#000000" selected>Чёрный</option>
-          <option value="#ffffff">Белый</option>
+          <option value="#000000">Чёрный</option>
+          <option value="#ffffff" selected>Белый</option>
         </select>
       </div>
       <div style="margin-top:16px;">
@@ -73,17 +117,21 @@
           <option value="255,255,255">Белая</option>
         </select>
       </div>
-    </section>
-
-    <!-- Подсказка -->
-    <section class="card">
-      <p class="hint">После изменения любого параметра нажмите кнопку <b>«Обновить слайды»</b>, чтобы увидеть результат.</p>
+      
+      <!-- Размер шрифта - ползунок -->
+      <div class="slider-group" style="margin-top:16px;">
+        <div class="slider-label">
+          <label>Размер шрифта</label>
+          <span class="slider-value" id="fontSizeValue">45px</span>
+        </div>
+        <input id="fontSize" type="range" min="40" max="160" value="45">
+      </div>
     </section>
 
     <!-- Блок 3. Дополнительные настройки -->
     <section class="card">
       <details>
-        <summary>Дополнительные настройки <span style="color:var(--muted)">(необязательно)</span></summary>
+        <summary>Дополнительные настройки <span style="color:var(--muted)">(нажмите, чтобы развернуть)</span></summary>
         <div style="margin-top:16px;display:grid;gap:16px;">
           <div>
             <label>Шрифт</label>
@@ -104,62 +152,161 @@
               <option value="right">По правому краю</option>
             </select>
           </div>
-          <div>
-            <label>Размер шрифта (px)</label>
-            <input id="fontSize" type="number" min="18" max="64" value="45">
+          
+          <!-- Высота подложки - ползунок -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <label>Высота подложки</label>
+              <span class="slider-value" id="fadePctValue">60%</span>
+            </div>
+            <input id="fadePct" type="range" min="10" max="100" value="60">
           </div>
-          <div>
-            <label>Межстрочный интервал</label>
-            <input id="lineHeight" type="number" step="0.05" min="1.1" max="2" value="1.25">
+          
+          <div class="slider-separator"></div>
+          
+          <!-- Прозрачность подложки - ползунок -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <label>Прозрачность подложки</label>
+              <span class="slider-value" id="backdropOpacityValue">1.00</span>
+            </div>
+            <input id="backdropOpacity" type="range" min="0" max="1" step="0.05" value="1">
           </div>
-          <div>
-            <label>Отступ текста (px)</label>
-            <input id="padding" type="number" min="24" max="120" value="64">
+          
+          <div class="slider-separator"></div>
+          
+          <!-- Тень текста - ползунок -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <label>Тень текста</label>
+              <span class="slider-value" id="shadowValue">0.50</span>
+            </div>
+            <input id="shadow" type="range" min="0" max="1" step="0.05" value="0.5">
           </div>
-          <div>
-            <label>Высота подложки (% от холста)</label>
-            <input id="fadePct" type="number" min="10" max="100" value="60">
+          
+          <div class="slider-separator"></div>
+          
+          <!-- Межстрочный интервал - ползунок -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <label>Межстрочный интервал</label>
+              <span class="slider-value" id="lineHeightValue">1.25</span>
+            </div>
+            <input id="lineHeight" type="range" min="1.1" max="2" step="0.05" value="1.25">
           </div>
-          <div>
-            <label>Прозрачность подложки (0–1)</label>
-            <input id="backdropOpacity" type="number" step="0.05" min="0" max="1" value="1">
+          
+          <div class="slider-separator"></div>
+          
+          <!-- Отступ текста - ползунок -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <label>Отступ текста</label>
+              <span class="slider-value" id="paddingValue">64px</span>
+            </div>
+            <input id="padding" type="range" min="24" max="120" value="64">
           </div>
-          <div>
-            <label>Скругление углов (px)</label>
-            <input id="cornerRadius" type="number" min="0" max="80" value="0">
+          
+          <div class="slider-separator"></div>
+          
+          <!-- Скругление углов - ползунок -->
+          <div class="slider-group">
+            <div class="slider-label">
+              <label>Скругление углов</label>
+              <span class="slider-value" id="cornerRadiusValue">0px</span>
+            </div>
+            <input id="cornerRadius" type="range" min="0" max="80" value="0">
           </div>
-          <div>
-            <label>Тень текста (0–1)</label>
-            <input id="shadow" type="number" step="0.05" min="0" max="1" value="0.5">
-          </div>
-          <label><input type="checkbox" id="swipeArrow"> Показывать стрелку «свайп вправо»</label>
         </div>
       </details>
     </section>
 
-    <!-- Кнопки -->
-    <section class="card" style="display:flex;gap:12px;justify-content:flex-end;">
-      <button id="update" class="primary">Обновить слайды</button>
-      <button id="clear" class="secondary">Очистить</button>
+    <section id="results" class="gallery"></section>
+    
+    <!-- Финальные кнопки -->
+    <section class="card final-buttons">
+      <button id="clearAll" class="secondary">Очистить всё</button>
+      <button id="downloadAll" class="primary">Скачать всё</button>
     </section>
 
-    <section id="results" class="gallery"></section>
-
-    <footer>
-      Размер картинок: 1080×1350 (формат 4:5). Нажмите «Заменить изображение» для выбора фона или кликните по картинке, чтобы сохранить.
+    <footer style="height:1cm;">
     </footer>
+  </div>
+
+  <!-- Модальное окно для выбора фона -->
+  <div id="bgModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Выбрать готовый фон</h3>
+        <button class="modal-close" onclick="document.getElementById('bgModal').classList.remove('active')">×</button>
+      </div>
+      
+      <h4>Однотонные фоны</h4>
+      <div class="bg-grid" id="solidBgs"></div>
+      
+      <h4 style="margin-top:24px">Яркие акцентные фоны</h4>
+      <div class="bg-grid" id="accentBgs"></div>
+    </div>
+  </div>
+
+  <!-- Модальное окно для паттернов -->
+  <div id="patternModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Добавить паттерн</h3>
+        <button class="modal-close" onclick="document.getElementById('patternModal').classList.remove('active')">×</button>
+      </div>
+      
+      <div style="display:grid;gap:16px;">
+        <div>
+          <label>Тип паттерна</label>
+          <select id="patternType">
+            <option value="none">Без паттерна</option>
+            <option value="dots">Точки</option>
+            <option value="diamonds">Ромбы</option>
+            <option value="grid">Сетка</option>
+            <option value="vlines">Вертикальные полосы</option>
+            <option value="hlines">Горизонтальные полосы</option>
+            <option value="waves">Волны</option>
+            <option value="crumpled">Мятая бумага</option>
+          </select>
+        </div>
+        <div class="slider-group">
+          <div class="slider-label">
+            <label>Размер паттерна</label>
+            <span class="slider-value" id="patternSizeValue">30</span>
+          </div>
+          <input id="patternSize" type="range" min="10" max="100" value="30">
+        </div>
+        <div class="slider-group">
+          <div class="slider-label">
+            <label>Яркость паттерна</label>
+            <span class="slider-value" id="patternOpacityValue">0.20</span>
+          </div>
+          <input id="patternOpacity" type="range" min="0" max="1" step="0.05" value="0.2">
+        </div>
+        
+        <div style="display:flex;gap:12px;margin-top:24px;">
+          <button id="resetPattern" class="secondary" style="flex:1">Сбросить</button>
+          <button id="applyPattern" class="primary" style="flex:1">Применить</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
   (function(){
     if(window.igApp&&window.igApp.destroy){window.igApp.destroy();if(window.igApp.filePicker)window.igApp.filePicker.remove()}
-    const CANVAS_W=1080,CANVAS_H=1350;
+    
+    // Размеры
+    let CANVAS_W=1080,CANVAS_H=1350;
+    let currentFormat='4:5';
+    
     const storyInput=document.getElementById('story');
     const paraCount=document.getElementById('paraCount');
     const photoCount=document.getElementById('photoCount');
     const results=document.getElementById('results');
-    const updateBtn=document.getElementById('update');
-    const clearBtn=document.getElementById('clear');
+    const clearAllBtn=document.getElementById('clearAll');
+    const downloadAllBtn=document.getElementById('downloadAll');
 
     const fontFamily=document.getElementById('fontFamily');
     const textAlignSel=document.getElementById('textAlign');
@@ -172,61 +319,552 @@
     const cornerRadiusInput=document.getElementById('cornerRadius');
     const textColorInput=document.getElementById('textColor');
     const shadowInput=document.getElementById('shadow');
-    const swipeArrow=document.getElementById('swipeArrow');
+    
+    // Значения ползунков
+    const fontSizeValue=document.getElementById('fontSizeValue');
+    const fadePctValue=document.getElementById('fadePctValue');
+    const backdropOpacityValue=document.getElementById('backdropOpacityValue');
+    const shadowValue=document.getElementById('shadowValue');
+    const lineHeightValue=document.getElementById('lineHeightValue');
+    const paddingValue=document.getElementById('paddingValue');
+    const cornerRadiusValue=document.getElementById('cornerRadiusValue');
+    
+    // Паттерны
+    const patternType=document.getElementById('patternType');
+    const patternSize=document.getElementById('patternSize');
+    const patternOpacity=document.getElementById('patternOpacity');
+    const patternSizeValue=document.getElementById('patternSizeValue');
+    const patternOpacityValue=document.getElementById('patternOpacityValue');
+    const applyPatternBtn=document.getElementById('applyPattern');
+    const resetPatternBtn=document.getElementById('resetPattern');
 
-    const destroyFns=[];function on(el,ev,fn){el.addEventListener(ev,fn);destroyFns.push(()=>el.removeEventListener(ev,fn))}
+    const destroyFns=[];
+    function on(el,ev,fn){el.addEventListener(ev,fn);destroyFns.push(()=>el.removeEventListener(ev,fn))}
+    
     let slides=[];
     let pendingIndex=null;
+    let selectedBgColor=null;
+    
     const filePicker=document.createElement('input');
     filePicker.type='file';filePicker.accept='image/*';filePicker.style.display='none';
     document.body.appendChild(filePicker);
 
-    on(filePicker,'change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(pendingIndex==null)return;const url=await fileToDataURL(f);const img=await urlToImage(url);slides[pendingIndex].image=img;await renderOne(pendingIndex);pendingIndex=null;filePicker.value='';updateCounts()});
+    // Готовые фоны
+    const solidColors=[
+      '#8B7355','#A0826D','#6B5B4F','#9B8B7E','#7D6E5C',
+      '#B8A99A','#C8B8A8','#D4C5B7','#E5DDD5','#F5F0EB',
+      '#4A5D5E','#5C7A7C','#7FA1A3','#9BB8BA','#C1D5D7',
+      '#6B7C8C','#8497A7','#9DAFC0','#B6C7D6','#CFE0ED'
+    ];
+    
+    const accentColors=[
+      '#8B1874','#D946EF','#FFD700','#FF6B9D','#10B981',
+      '#F59E0B','#EC4899','#3B82F6','#8B5CF6','#14B8A6'
+    ];
 
-    function parseParas(){return String(storyInput.value||'').split(/\n\s*\n+/).map(p=>p.replace(/[\t\r]+/g,' ').trim()).filter(Boolean)}
-    function buildOrPreserve(){const next=parseParas();if(!slides.length){slides=next.map(t=>({text:t,image:null}))}else{const kept=Math.min(slides.length,next.length);for(let i=0;i<kept;i++){slides[i].text=next[i]}if(next.length>slides.length){for(let i=slides.length;i<next.length;i++){slides.push({text:next[i],image:null})}}else if(next.length<slides.length){slides=slides.slice(0,next.length)}}}
-    async function ensureFonts(){if(document.fonts&&document.fonts.ready){try{await document.fonts.ready}catch{}}}
-    async function renderAll(){results.innerHTML='';await ensureFonts();for(let i=0;i<slides.length;i++){await renderOne(i)}updateCounts()}
+    // Обновление значений ползунков
+    fontSizeInput.oninput=()=>{fontSizeValue.textContent=fontSizeInput.value+'px';triggerRender()};
+    fadePctInput.oninput=()=>{fadePctValue.textContent=fadePctInput.value+'%';triggerRender()};
+    backdropOpacityInput.oninput=()=>{backdropOpacityValue.textContent=parseFloat(backdropOpacityInput.value).toFixed(2);triggerRender()};
+    shadowInput.oninput=()=>{shadowValue.textContent=parseFloat(shadowInput.value).toFixed(2);triggerRender()};
+    lineHeightInput.oninput=()=>{lineHeightValue.textContent=parseFloat(lineHeightInput.value).toFixed(2);triggerRender()};
+    paddingInput.oninput=()=>{paddingValue.textContent=paddingInput.value+'px';triggerRender()};
+    cornerRadiusInput.oninput=()=>{cornerRadiusValue.textContent=cornerRadiusInput.value+'px';triggerRender()};
+    
+    // Обновление значений паттерна
+    patternSize.oninput=()=>{patternSizeValue.textContent=patternSize.value};
+    patternOpacity.oninput=()=>{patternOpacityValue.textContent=parseFloat(patternOpacity.value).toFixed(2)};
+
+    // Автоматическая тень при смене цвета текста
+    textColorInput.onchange=()=>{
+      if(textColorInput.value==='#000000'){
+        shadowInput.value='0';
+        shadowValue.textContent='0.00';
+      }else if(textColorInput.value==='#ffffff'){
+        shadowInput.value='0.5';
+        shadowValue.textContent='0.50';
+      }
+      triggerRender();
+    };
+
+    on(filePicker,'change',async e=>{
+      const f=e.target.files&&e.target.files[0];
+      if(!f)return;
+      if(pendingIndex==null)return;
+      const url=await fileToDataURL(f);
+      const img=await urlToImage(url);
+      slides[pendingIndex].image=img;
+      slides[pendingIndex].bgColor=null;
+      await renderOne(pendingIndex);
+      pendingIndex=null;
+      filePicker.value='';
+      updateCounts();
+    });
+
+    // Выбор формата
+    document.querySelectorAll('.format-btn').forEach(btn=>{
+      btn.onclick=()=>{
+        document.querySelectorAll('.format-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const format=btn.dataset.format;
+        currentFormat=format;
+        if(format==='4:5'){CANVAS_W=1080;CANVAS_H=1350}
+        else if(format==='1:1'){CANVAS_W=1080;CANVAS_H=1080}
+        else if(format==='9:16'){CANVAS_W=1080;CANVAS_H=1920}
+        triggerRender();
+      };
+    });
+
+    // Создание фонов в модалке
+    const solidBgs=document.getElementById('solidBgs');
+    const accentBgs=document.getElementById('accentBgs');
+    
+    solidColors.forEach(color=>{
+      const div=document.createElement('div');
+      div.className='bg-item';
+      div.style.background=color;
+      div.onclick=()=>{
+        if(pendingIndex!=null){
+          slides[pendingIndex].bgColor=color;
+          slides[pendingIndex].image=null;
+          renderOne(pendingIndex);
+          updateCounts();
+          document.getElementById('bgModal').classList.remove('active');
+          pendingIndex=null;
+        }
+      };
+      solidBgs.appendChild(div);
+    });
+    
+    accentColors.forEach(color=>{
+      const div=document.createElement('div');
+      div.className='bg-item';
+      div.style.background=color;
+      div.onclick=()=>{
+        if(pendingIndex!=null){
+          slides[pendingIndex].bgColor=color;
+          slides[pendingIndex].image=null;
+          renderOne(pendingIndex);
+          updateCounts();
+          document.getElementById('bgModal').classList.remove('active');
+          pendingIndex=null;
+        }
+      };
+      accentBgs.appendChild(div);
+    });
+
+    function parseParas(){
+      return String(storyInput.value||'').split(/\n\s*\n+/).map(p=>p.replace(/[\t\r]+/g,' ').trim()).filter(Boolean);
+    }
+    
+    function buildOrPreserve(){
+      const next=parseParas();
+      if(!slides.length){
+        slides=next.map(t=>({text:t,image:null,bgColor:null,pattern:null}));
+      }else{
+        const kept=Math.min(slides.length,next.length);
+        for(let i=0;i<kept;i++){slides[i].text=next[i]}
+        if(next.length>slides.length){
+          for(let i=slides.length;i<next.length;i++){
+            slides.push({text:next[i],image:null,bgColor:null,pattern:null});
+          }
+        }else if(next.length<slides.length){
+          slides=slides.slice(0,next.length);
+        }
+      }
+    }
+    
+    // Обработчик применения паттерна
+    applyPatternBtn.onclick=()=>{
+      if(pendingIndex!=null){
+        slides[pendingIndex].pattern={
+          type:patternType.value,
+          size:parseInt(patternSize.value),
+          opacity:parseFloat(patternOpacity.value)
+        };
+        renderOne(pendingIndex);
+        document.getElementById('patternModal').classList.remove('active');
+        pendingIndex=null;
+      }
+    };
+    
+    // Обработчик сброса паттерна
+    resetPatternBtn.onclick=()=>{
+      if(pendingIndex!=null){
+        slides[pendingIndex].pattern=null;
+        renderOne(pendingIndex);
+        document.getElementById('patternModal').classList.remove('active');
+        pendingIndex=null;
+      }
+    };
+    
+    async function ensureFonts(){
+      if(document.fonts&&document.fonts.ready){
+        try{await document.fonts.ready}catch{}
+      }
+    }
+    
+    let renderTimeout;
+    function triggerRender(){
+      clearTimeout(renderTimeout);
+      renderTimeout=setTimeout(async()=>{
+        buildOrPreserve();
+        await renderAll();
+      },300);
+    }
+    
+    async function renderAll(){
+      results.innerHTML='';
+      await ensureFonts();
+      for(let i=0;i<slides.length;i++){
+        await renderOne(i);
+      }
+      updateCounts();
+    }
+    
     async function renderOne(i){
       const s=slides[i];
-      const canvas=document.createElement('canvas');canvas.width=CANVAS_W;canvas.height=CANVAS_H;const ctx=canvas.getContext('2d');
-      const radius=clamp(parseInt(cornerRadiusInput.value||0),0,80);if(radius>0){roundedRect(ctx,0,0,CANVAS_W,CANVAS_H,radius);ctx.clip()}
-      if(s.image){drawCover(ctx,s.image,CANVAS_W,CANVAS_H)}else{ctx.fillStyle='#F1F5F9';ctx.fillRect(0,0,CANVAS_W,CANVAS_H)}
+      const canvas=document.createElement('canvas');
+      canvas.width=CANVAS_W;
+      canvas.height=CANVAS_H;
+      const ctx=canvas.getContext('2d');
+      
+      const radius=clamp(parseInt(cornerRadiusInput.value||0),0,80);
+      if(radius>0){
+        roundedRect(ctx,0,0,CANVAS_W,CANVAS_H,radius);
+        ctx.clip();
+      }
+      
+      // Фон
+      if(s.image){
+        drawCover(ctx,s.image,CANVAS_W,CANVAS_H);
+      }else if(s.bgColor){
+        ctx.fillStyle=s.bgColor;
+        ctx.fillRect(0,0,CANVAS_W,CANVAS_H);
+      }else{
+        ctx.fillStyle='#F1F5F9';
+        ctx.fillRect(0,0,CANVAS_W,CANVAS_H);
+      }
+      
+      // Паттерн из слайда
+      if(s.pattern&&s.pattern.type!=='none'){
+        drawPattern(ctx,s.pattern.type,s.pattern.size,s.pattern.opacity,CANVAS_W,CANVAS_H);
+      }
+      
+      // Градиент подложки
       const fadePct=clamp(parseInt(fadePctInput.value||60),10,100)/100;
       const back=clamp(parseFloat(backdropOpacityInput.value||1),0,1);
       const [r,g,b]=backdropColorInput.value.split(',').map(Number);
       const grad=ctx.createLinearGradient(0,CANVAS_H,0,CANVAS_H*(1-fadePct));
       grad.addColorStop(0,`rgba(${r},${g},${b},${back})`);
       grad.addColorStop(1,`rgba(${r},${g},${b},0)`);
-      ctx.fillStyle=grad;ctx.fillRect(0,0,CANVAS_W,CANVAS_H);
+      ctx.fillStyle=grad;
+      ctx.fillRect(0,0,CANVAS_W,CANVAS_H);
+      
+      // Текст
       const pad=clamp(parseInt(paddingInput.value||64),16,160);
       const fontSize=clamp(parseInt(fontSizeInput.value||45),18,72);
       const lh=clamp(parseFloat(lineHeightInput.value||1.25),1.1,2);
-      const color=textColorInput.value||'#000';
+      const color=textColorInput.value||'#fff';
       const shadow=clamp(parseFloat(shadowInput.value||0.5),0,1);
       const align=textAlignSel?textAlignSel.value:'left';
-      ctx.fillStyle=color;ctx.font=`${fontSize}px ${fontFamily?fontFamily.value:"sans-serif"}`;ctx.textBaseline='alphabetic';
-      if(shadow>0){ctx.shadowColor=`rgba(0,0,0,${shadow})`;ctx.shadowBlur=8;ctx.shadowOffsetY=2}else{ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0}
+      
+      ctx.fillStyle=color;
+      ctx.font=`${fontSize}px ${fontFamily?fontFamily.value:"sans-serif"}`;
+      ctx.textBaseline='alphabetic';
+      
+      if(shadow>0){
+        ctx.shadowColor=`rgba(0,0,0,${shadow})`;
+        ctx.shadowBlur=8;
+        ctx.shadowOffsetY=2;
+      }else{
+        ctx.shadowColor='transparent';
+        ctx.shadowBlur=0;
+        ctx.shadowOffsetY=0;
+      }
+      
       const left=pad,right=CANVAS_W-pad,width=right-left,bottom=CANVAS_H-pad,top=CANVAS_H*(1-fadePct)+pad*0.25;
-      const lines=wrap(ctx,s.text,width);const lineH=fontSize*lh;const total=lines.length*lineH;
+      const lines=wrap(ctx,s.text,width);
+      const lineH=fontSize*lh;
+      const total=lines.length*lineH;
       let y=Math.min(bottom,Math.max(top+lineH,bottom-total+lineH*0.2));
-      for(const line of lines){let x;if(align==='center'){x=CANVAS_W/2;ctx.textAlign='center'}else if(align==='right'){x=right;ctx.textAlign='right'}else{x=left;ctx.textAlign='left'}ctx.fillText(line,x,y);y+=lineH}
-      ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
-      if(swipeArrow.checked&&i<slides.length-1){const size=Math.min(80,Math.max(56,CANVAS_W*0.06));const cx=CANVAS_W-pad-size/2;const cy=CANVAS_H-pad/2;drawArrow(ctx,cx,cy,size)}
-      const dataURL=canvas.toDataURL('image/png');let host=results.querySelector(`[data-slide='${i}']`);if(!host){host=document.createElement('div');host.className='slide';host.dataset.slide=String(i);const img=document.createElement('img');img.className='slide-img';host.appendChild(img);const ctrls=document.createElement('div');ctrls.className='slide-controls';const rep=document.createElement('button');rep.textContent='Заменить изображение';rep.addEventListener('click',()=>{pendingIndex=i;filePicker.click()});ctrls.appendChild(rep);host.addEventListener('click',ev=>{if(ev.target.tagName.toLowerCase()==='button')return;const a=document.createElement('a');a.href=host.querySelector('.slide-img').src;a.download=`slide_${String(i+1).padStart(2,'0')}.png`;a.click()});host.appendChild(ctrls);results.appendChild(host)}host.querySelector('.slide-img').src=dataURL}
-    function drawCover(ctx,img,w,h){const r=img.width/img.height;const R=w/h;let dw,dh,dx,dy;if(r>R){dh=h;dw=h*r;dx=(w-dw)/2;dy=0}else{dw=w;dh=w/r;dx=0;dy=(h-dh)/2}ctx.drawImage(img,dx,dy,dw,dh)}
-    function wrap(ctx,text,maxW){const words=String(text||'').split(/\s+/);const out=[];let line='';for(let i=0;i<words.length;i++){const test=line?line+' '+words[i]:words[i];if(ctx.measureText(test).width>maxW&&line){out.push(line);line=words[i]}else{line=test}}if(line)out.push(line);return out}
-    function roundedRect(ctx,x,y,w,h,r){const m=Math.min(w,h)/2;r=Math.min(r,m);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
-    function clamp(v,min,max){return Math.max(min,Math.min(max,Number.isFinite(v)?v:min))}
-    function fileToDataURL(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)})}
-    function urlToImage(url){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url})}
-    function drawArrow(ctx,cx,cy,size){const r=size/2;ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fill();ctx.lineWidth=Math.max(4,size*0.12);ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='rgba(255,255,255,0.95)';const ax1=cx-size*0.18,ay1=cy-size*0.2,ax2=cx+size*0.18,ay2=cy,ax3=cx-size*0.18,ay3=cy+size*0.2;ctx.beginPath();ctx.moveTo(ax1,ay1);ctx.lineTo(ax2,ay2);ctx.lineTo(ax3,ay3);ctx.stroke();ctx.restore()}
-    function updateCounts(){const p=slides.length;const f=slides.filter(s=>!!s.image).length;paraCount.textContent=`Абзацев: ${p}`;photoCount.textContent=`С фото: ${f}/${p}`}
-    let t;on(storyInput,'input',()=>{clearTimeout(t);t=setTimeout(async()=>{buildOrPreserve();await renderAll()},500)});
-    on(updateBtn,'click',async()=>{buildOrPreserve();await renderAll()});
-    on(clearBtn,'click',()=>{results.innerHTML='';slides=[];updateCounts();window.scrollTo({top:0,behavior:'smooth'})});
+      
+      for(const line of lines){
+        let x;
+        if(align==='center'){x=CANVAS_W/2;ctx.textAlign='center'}
+        else if(align==='right'){x=right;ctx.textAlign='right'}
+        else{x=left;ctx.textAlign='left'}
+        ctx.fillText(line,x,y);
+        y+=lineH;
+      }
+      
+      ctx.shadowColor='transparent';
+      ctx.shadowBlur=0;
+      ctx.shadowOffsetY=0;
+      
+      const dataURL=canvas.toDataURL('image/png');
+      let host=results.querySelector(`[data-slide='${i}']`);
+      
+      if(!host){
+        host=document.createElement('div');
+        host.className='slide';
+        host.dataset.slide=String(i);
+        
+        const img=document.createElement('img');
+        img.className='slide-img';
+        host.appendChild(img);
+        
+        const ctrls=document.createElement('div');
+        ctrls.className='slide-controls';
+        
+        // Кнопка "Выбрать готовый фон"
+        const bgBtn=document.createElement('button');
+        bgBtn.className='btn-bg';
+        bgBtn.textContent='Выбрать готовый фон';
+        bgBtn.onclick=()=>{
+          pendingIndex=i;
+          document.getElementById('bgModal').classList.add('active');
+        };
+        ctrls.appendChild(bgBtn);
+        
+        // Кнопка "Добавить фото"
+        const photoBtn=document.createElement('button');
+        photoBtn.className='btn-photo';
+        photoBtn.textContent='Добавить фото';
+        photoBtn.onclick=()=>{
+          pendingIndex=i;
+          filePicker.click();
+        };
+        ctrls.appendChild(photoBtn);
+        
+        // Кнопка "Добавить паттерн"
+        const patternBtn=document.createElement('button');
+        patternBtn.className='btn-pattern';
+        patternBtn.textContent='Добавить паттерн';
+        patternBtn.onclick=()=>{
+          pendingIndex=i;
+          document.getElementById('patternModal').classList.add('active');
+        };
+        ctrls.appendChild(patternBtn);
+        
+        // Кнопка "Скачать слайд"
+        const downloadBtn=document.createElement('button');
+        downloadBtn.className='btn-download';
+        downloadBtn.textContent='Скачать слайд';
+        downloadBtn.onclick=()=>{
+          const a=document.createElement('a');
+          a.href=host.querySelector('.slide-img').src;
+          a.download=`slide_${String(i+1).padStart(2,'0')}.png`;
+          a.click();
+        };
+        ctrls.appendChild(downloadBtn);
+        
+        host.appendChild(ctrls);
+        results.appendChild(host);
+      }
+      
+      host.querySelector('.slide-img').src=dataURL;
+    }
+    
+    function drawPattern(ctx,type,size,opacity,w,h){
+      const temp=document.createElement('canvas');
+      temp.width=w;
+      temp.height=h;
+      const tctx=temp.getContext('2d');
+      
+      tctx.strokeStyle=`rgba(255,255,255,${opacity})`;
+      tctx.fillStyle=`rgba(255,255,255,${opacity})`;
+      tctx.lineWidth=2;
+      
+      if(type==='dots'){
+        for(let y=0;y<h;y+=size){
+          for(let x=0;x<w;x+=size){
+            tctx.beginPath();
+            tctx.arc(x,y,size/8,0,Math.PI*2);
+            tctx.fill();
+          }
+        }
+      }else if(type==='diamonds'){
+        // Точки в ромбовидном узоре
+        for(let row=0;row<h/size+2;row++){
+          for(let col=0;col<w/size+2;col++){
+            const x=col*size+(row%2===0?0:size/2);
+            const y=row*size*0.866; // высота равностороннего треугольника
+            tctx.beginPath();
+            tctx.arc(x,y,size/6,0,Math.PI*2);
+            tctx.fill();
+          }
+        }
+      }else if(type==='grid'){
+        // Сетка из горизонтальных и вертикальных линий
+        for(let x=0;x<w;x+=size){
+          tctx.beginPath();
+          tctx.moveTo(x,0);
+          tctx.lineTo(x,h);
+          tctx.stroke();
+        }
+        for(let y=0;y<h;y+=size){
+          tctx.beginPath();
+          tctx.moveTo(0,y);
+          tctx.lineTo(w,y);
+          tctx.stroke();
+        }
+      }else if(type==='vlines'){
+        for(let x=0;x<w;x+=size){
+          tctx.beginPath();
+          tctx.moveTo(x,0);
+          tctx.lineTo(x,h);
+          tctx.stroke();
+        }
+      }else if(type==='hlines'){
+        for(let y=0;y<h;y+=size){
+          tctx.beginPath();
+          tctx.moveTo(0,y);
+          tctx.lineTo(w,y);
+          tctx.stroke();
+        }
+      }else if(type==='waves'){
+        tctx.beginPath();
+        for(let x=0;x<w;x++){
+          const y=h/3+Math.sin(x/size*Math.PI)*size;
+          if(x===0)tctx.moveTo(x,y);
+          else tctx.lineTo(x,y);
+        }
+        tctx.stroke();
+        tctx.beginPath();
+        for(let x=0;x<w;x++){
+          const y=h*2/3+Math.sin(x/size*Math.PI)*size;
+          if(x===0)tctx.moveTo(x,y);
+          else tctx.lineTo(x,y);
+        }
+        tctx.stroke();
+      }else if(type==='crumpled'){
+        for(let i=0;i<200;i++){
+          const x1=Math.random()*w;
+          const y1=Math.random()*h;
+          const x2=x1+(Math.random()-0.5)*size;
+          const y2=y1+(Math.random()-0.5)*size;
+          tctx.beginPath();
+          tctx.moveTo(x1,y1);
+          tctx.lineTo(x2,y2);
+          tctx.stroke();
+        }
+      }
+      
+      ctx.drawImage(temp,0,0);
+    }
+    
+    function drawCover(ctx,img,w,h){
+      const r=img.width/img.height;
+      const R=w/h;
+      let dw,dh,dx,dy;
+      if(r>R){dh=h;dw=h*r;dx=(w-dw)/2;dy=0}
+      else{dw=w;dh=w/r;dx=0;dy=(h-dh)/2}
+      ctx.drawImage(img,dx,dy,dw,dh);
+    }
+    
+    function wrap(ctx,text,maxW){
+      const words=String(text||'').split(/\s+/);
+      const out=[];
+      let line='';
+      for(let i=0;i<words.length;i++){
+        const test=line?line+' '+words[i]:words[i];
+        if(ctx.measureText(test).width>maxW&&line){
+          out.push(line);
+          line=words[i];
+        }else{
+          line=test;
+        }
+      }
+      if(line)out.push(line);
+      return out;
+    }
+    
+    function roundedRect(ctx,x,y,w,h,r){
+      const m=Math.min(w,h)/2;
+      r=Math.min(r,m);
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);
+      ctx.arcTo(x+w,y,x+w,y+h,r);
+      ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r);
+      ctx.arcTo(x,y,x+w,y,r);
+      ctx.closePath();
+    }
+    
+    function clamp(v,min,max){
+      return Math.max(min,Math.min(max,Number.isFinite(v)?v:min));
+    }
+    
+    function fileToDataURL(file){
+      return new Promise((res,rej)=>{
+        const r=new FileReader();
+        r.onload=()=>res(r.result);
+        r.onerror=rej;
+        r.readAsDataURL(file);
+      });
+    }
+    
+    function urlToImage(url){
+      return new Promise((res,rej)=>{
+        const i=new Image();
+        i.onload=()=>res(i);
+        i.onerror=rej;
+        i.src=url;
+      });
+    }
+    
+    function updateCounts(){
+      const p=slides.length;
+      const f=slides.filter(s=>!!(s.image||s.bgColor)).length;
+      paraCount.textContent=`Абзацев: ${p}`;
+      photoCount.textContent=`С фото: ${f}/${p}`;
+    }
+    
+    // Автообновление при вводе текста
+    let t;
+    on(storyInput,'input',()=>{
+      clearTimeout(t);
+      t=setTimeout(async()=>{
+        buildOrPreserve();
+        await renderAll();
+      },500);
+    });
+    
+    // Автообновление при изменении параметров
+    [fontFamily,textAlignSel,backdropColorInput].forEach(el=>{
+      on(el,'change',triggerRender);
+      on(el,'input',triggerRender);
+    });
+    
+    // Очистить всё (кроме текста)
+    on(clearAllBtn,'click',()=>{
+      slides.forEach(s=>{s.image=null;s.bgColor=null;s.pattern=null});
+      renderAll();
+    });
+    
+    // Скачать всё
+    on(downloadAllBtn,'click',()=>{
+      if(slides.length===0){
+        alert('Нет слайдов для скачивания!');
+        return;
+      }
+      slides.forEach((s,i)=>{
+        setTimeout(()=>{
+          const img=results.querySelector(`[data-slide='${i}'] .slide-img`);
+          if(img){
+            const a=document.createElement('a');
+            a.href=img.src;
+            a.download=`slide_${String(i+1).padStart(2,'0')}.png`;
+            a.click();
+          }
+        },i*200); // задержка между скачиваниями чтобы браузер успевал обработать
+      });
+    });
+    
     window.igApp={destroy(){destroyFns.forEach(f=>f());},filePicker};
-    buildOrPreserve();updateCounts();
+    buildOrPreserve();
+    updateCounts();
   })();
   </script>
 </body>
