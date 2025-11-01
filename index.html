@@ -98,7 +98,7 @@
 <body>
   <div class="wrap">
     <header>
-      <h1>Создатель каруселей v2</h1>
+      <h1>Создатель каруселей v2.1</h1>
       <p class="sub">Настройте параметры → добавьте текст и фон для каждого слайда → скачайте готовые изображения</p>
     </header>
 
@@ -244,9 +244,9 @@
       </div>
       
       <div id="settingsMainMenu" style="display:grid;gap:16px;">
-        <button id="chooseBgBtn" class="primary" style="width:100%;padding:14px">🎨 Выбрать готовый фон</button>
-        <button id="uploadPhotoBtn" class="primary" style="width:100%;padding:14px">📷 Загрузить фото</button>
-        <button id="addPatternBtn" class="primary" style="width:100%;padding:14px">✨ Добавить паттерн</button>
+        <button id="chooseBgBtn" class="primary" style="width:100%;padding:14px">Выбрать готовый фон</button>
+        <button id="uploadPhotoBtn" class="primary" style="width:100%;padding:14px">Загрузить фото</button>
+        <button id="addPatternBtn" class="primary" style="width:100%;padding:14px">Добавить паттерн</button>
       </div>
       
       <div id="bgSelectorMenu" style="display:none;">
@@ -259,7 +259,7 @@
           <div class="bg-grid" id="accentBgs"></div>
           
           <div style="padding:16px;margin-top:16px;background:var(--gray);border-radius:var(--radius-md);text-align:center;color:var(--muted)">
-            💡 Выберите фон
+            Выберите фон
           </div>
         </div>
         
@@ -300,7 +300,7 @@
         </div>
         
         <div style="padding:16px;margin-top:16px;background:var(--gray);border-radius:var(--radius-md);text-align:center;color:var(--muted)">
-          💡 Измените настройки паттерна
+          Измените настройки паттерна
         </div>
         
         <div id="patternApplyButtons" class="sticky-buttons">
@@ -829,7 +829,7 @@
         
         const textBtn=document.createElement('button');
         textBtn.className='btn-text';
-        textBtn.textContent='📝 Текст';
+        textBtn.textContent='Текст';
         textBtn.onclick=()=>{
           pendingIndex=i;
           slideText.value=slides[i].text||'';
@@ -867,7 +867,7 @@
         
         const downloadBtn=document.createElement('button');
         downloadBtn.className='btn-download';
-        downloadBtn.textContent='⬇️ Скачать';
+        downloadBtn.textContent='Скачать';
         downloadBtn.onclick=()=>{
           const a=document.createElement('a');
           a.href=host.querySelector('.slide-img').src;
